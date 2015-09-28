@@ -21,6 +21,8 @@ var _react2 = _interopRequireDefault(_react);
 
 var _classnames = require('classnames');
 
+var _classnames2 = _interopRequireDefault(_classnames);
+
 /**
  * @fileoverview react-star-rating
  * @author @cameronjroe
@@ -36,8 +38,6 @@ var _classnames = require('classnames');
  *   />
  */
 
-var _classnames2 = _interopRequireDefault(_classnames);
-
 var StarRating = (function (_React$Component) {
   _inherits(StarRating, _React$Component);
 
@@ -45,9 +45,6 @@ var StarRating = (function (_React$Component) {
     _classCallCheck(this, StarRating);
 
     _get(Object.getPrototypeOf(StarRating.prototype), 'constructor', this).call(this, props);
-
-    // initialize touch events
-    _react2['default'].initializeTouchEvents(true);
 
     this.state = {
       ratingCache: {
@@ -98,8 +95,8 @@ var StarRating = (function (_React$Component) {
   }, {
     key: 'componentDidMount',
     value: function componentDidMount() {
-      this.root = _react2['default'].findDOMNode(this.refs.root);
-      this.ratingContainer = _react2['default'].findDOMNode(this.refs.ratingContainer);
+      this.root = this.refs.root;
+      this.ratingContainer = this.refs.ratingContainer;
     }
   }, {
     key: 'componentWillUnmount',
@@ -174,11 +171,11 @@ var StarRating = (function (_React$Component) {
     value: function getSvg() {
       return _react2['default'].createElement(
         'svg',
-        { className: "react-star-rating__star", viewBox: "0 0 286 272", version: "1.1", xmlns: "http://www.w3.org/2000/svg" },
+        { className: 'react-star-rating__star', viewBox: '0 0 286 272', version: '1.1', xmlns: 'http://www.w3.org/2000/svg' },
         _react2['default'].createElement(
           'g',
-          { stroke: "none", 'stroke-width': "1", fill: "none", 'fill-rule': "evenodd" },
-          _react2['default'].createElement('polygon', { id: "star-flat", points: "143 225 54.8322122 271.352549 71.6707613 173.176275 0.341522556 103.647451 98.9161061 89.3237254 143 0 187.083894 89.3237254 285.658477 103.647451 214.329239 173.176275 231.167788 271.352549 " })
+          { stroke: 'none', 'stroke-width': '1', fill: 'none', 'fill-rule': 'evenodd' },
+          _react2['default'].createElement('polygon', { id: 'star-flat', points: '143 225 54.8322122 271.352549 71.6707613 173.176275 0.341522556 103.647451 98.9161061 89.3237254 143 0 187.083894 89.3237254 285.658477 103.647451 214.329239 173.176275 231.167788 271.352549 ' })
         )
       );
     }
@@ -261,7 +258,7 @@ var StarRating = (function (_React$Component) {
       if (this.props.caption) {
         caption = _react2['default'].createElement(
           'span',
-          { className: "react-rating-caption" },
+          { className: 'react-rating-caption' },
           this.props.caption
         );
       }
@@ -271,31 +268,31 @@ var StarRating = (function (_React$Component) {
       if (this.state.editing) {
         starRating = _react2['default'].createElement(
           'div',
-          { ref: "ratingContainer",
-            className: "rating-container rating-gly-star",
+          { ref: 'ratingContainer',
+            className: 'rating-container rating-gly-star',
             'data-content': this.state.glyph,
             onMouseMove: this.handleMouseMove.bind(this),
             onMouseLeave: this.handleMouseLeave.bind(this),
             onClick: this.handleClick.bind(this) },
-          _react2['default'].createElement('div', { className: "rating-stars", 'data-content': this.state.glyph, style: { width: this.state.pos } }),
-          _react2['default'].createElement('input', { type: "number", name: this.props.name, value: this.state.ratingCache.rating, style: { display: 'none !important' }, min: this.min, max: this.max, readOnly: true })
+          _react2['default'].createElement('div', { className: 'rating-stars', 'data-content': this.state.glyph, style: { width: this.state.pos } }),
+          _react2['default'].createElement('input', { type: 'number', name: this.props.name, value: this.state.ratingCache.rating, style: { display: 'none !important' }, min: this.min, max: this.max, readOnly: true })
         );
       } else {
         starRating = _react2['default'].createElement(
           'div',
-          { ref: "ratingContainer", className: "rating-container rating-gly-star", 'data-content': this.state.glyph },
-          _react2['default'].createElement('div', { className: "rating-stars", 'data-content': this.state.glyph, style: { width: this.state.pos } }),
-          _react2['default'].createElement('input', { type: "number", name: this.props.name, value: this.state.ratingCache.rating, style: { display: 'none !important' }, min: this.min, max: this.max, readOnly: true })
+          { ref: 'ratingContainer', className: 'rating-container rating-gly-star', 'data-content': this.state.glyph },
+          _react2['default'].createElement('div', { className: 'rating-stars', 'data-content': this.state.glyph, style: { width: this.state.pos } }),
+          _react2['default'].createElement('input', { type: 'number', name: this.props.name, value: this.state.ratingCache.rating, style: { display: 'none !important' }, min: this.min, max: this.max, readOnly: true })
         );
       }
 
       return _react2['default'].createElement(
         'span',
-        { className: "react-star-rating" },
+        { className: 'react-star-rating' },
         caption,
         _react2['default'].createElement(
           'span',
-          { ref: "root", style: { cursor: 'pointer' }, className: classes },
+          { ref: 'root', style: { cursor: 'pointer' }, className: classes },
           starRating
         )
       );

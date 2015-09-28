@@ -21,9 +21,6 @@ class StarRating extends React.Component {
   constructor(props) {
     super(props);
 
-    // initialize touch events
-    React.initializeTouchEvents(true);
-
     this.state = {
       ratingCache: {
         pos: 0,
@@ -68,8 +65,8 @@ class StarRating extends React.Component {
   }
 
   componentDidMount() {
-    this.root = React.findDOMNode(this.refs.root);
-    this.ratingContainer = React.findDOMNode(this.refs.ratingContainer);
+    this.root = this.refs.root;
+    this.ratingContainer = this.refs.ratingContainer;
   }
 
   componentWillUnmount() {

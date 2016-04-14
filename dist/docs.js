@@ -3510,7 +3510,7 @@ module.exports={
   "author": "Cameron J Roe <cameronjroe@gmail.com> (http://cameronjroe.com/)",
   "license": "MIT",
   "peerDependencies": {
-    "react": "~15.0.0 || ~0.14.0"
+    "react": "~15.0.0"
   },
   "devDependencies": {
     "babel-eslint": "^6.0.2",
@@ -3755,7 +3755,6 @@ var StarRating = (function (_React$Component) {
   }, {
     key: 'handleClick',
     value: function handleClick(e) {
-
       // is it disabled?
       if (this.props.disabled) {
         e.stopPropagation();
@@ -3784,56 +3783,61 @@ var StarRating = (function (_React$Component) {
       }
     }
   }, {
+    key: 'renderEditing',
+    value: function renderEditing() {
+      var _this = this;
+
+      return _react2['default'].createElement(
+        'div',
+        {
+          ref: function (ref) {
+            return _this.ratingContainer = ref;
+          },
+          className: 'rating-container rating-gly-star',
+          'data-content': this.state.glyph,
+          onMouseMove: this.handleMouseMove.bind(this),
+          onMouseLeave: this.handleMouseLeave.bind(this),
+          onClick: this.handleClick.bind(this)
+        },
+        _react2['default'].createElement('div', { className: 'rating-stars', 'data-content': this.state.glyph, style: { width: this.state.pos } }),
+        _react2['default'].createElement('input', { type: 'number', name: this.props.name, value: this.state.ratingCache.rating, style: { display: 'none !important' }, min: this.min, max: this.max, readOnly: true })
+      );
+    }
+  }, {
+    key: 'renderShow',
+    value: function renderShow() {
+      return _react2['default'].createElement(
+        'div',
+        { ref: 'ratingContainer', className: 'rating-container rating-gly-star', 'data-content': this.state.glyph },
+        _react2['default'].createElement('div', { className: 'rating-stars', 'data-content': this.state.glyph, style: { width: this.state.pos } }),
+        _react2['default'].createElement('input', { type: 'number', name: this.props.name, value: this.state.ratingCache.rating, style: { display: 'none !important' }, min: this.min, max: this.max, readOnly: true })
+      );
+    }
+  }, {
     key: 'render',
     value: function render() {
-      var _cx;
+      var _cx,
+          _this2 = this;
 
-      var caption = null;
       var classes = (0, _classnames2['default'])((_cx = {
         'react-star-rating__root': true,
         'rating-disabled': this.props.disabled
       }, _defineProperty(_cx, 'react-star-rating__size--' + this.props.size, this.props.size), _defineProperty(_cx, 'rating-editing', this.state.editing), _cx));
 
-      // is there a caption?
-      if (this.props.caption) {
-        caption = _react2['default'].createElement(
-          'span',
-          { className: 'react-rating-caption' },
-          this.props.caption
-        );
-      }
-
-      // are we editing this rating?
-      var starRating;
-      if (this.state.editing) {
-        starRating = _react2['default'].createElement(
-          'div',
-          { ref: 'ratingContainer',
-            className: 'rating-container rating-gly-star',
-            'data-content': this.state.glyph,
-            onMouseMove: this.handleMouseMove.bind(this),
-            onMouseLeave: this.handleMouseLeave.bind(this),
-            onClick: this.handleClick.bind(this) },
-          _react2['default'].createElement('div', { className: 'rating-stars', 'data-content': this.state.glyph, style: { width: this.state.pos } }),
-          _react2['default'].createElement('input', { type: 'number', name: this.props.name, value: this.state.ratingCache.rating, style: { display: 'none !important' }, min: this.min, max: this.max, readOnly: true })
-        );
-      } else {
-        starRating = _react2['default'].createElement(
-          'div',
-          { ref: 'ratingContainer', className: 'rating-container rating-gly-star', 'data-content': this.state.glyph },
-          _react2['default'].createElement('div', { className: 'rating-stars', 'data-content': this.state.glyph, style: { width: this.state.pos } }),
-          _react2['default'].createElement('input', { type: 'number', name: this.props.name, value: this.state.ratingCache.rating, style: { display: 'none !important' }, min: this.min, max: this.max, readOnly: true })
-        );
-      }
-
       return _react2['default'].createElement(
         'span',
         { className: 'react-star-rating' },
-        caption,
+        !!this.props.caption.length && _react2['default'].createElement(
+          'span',
+          { className: 'react-rating-caption' },
+          this.props.caption
+        ),
         _react2['default'].createElement(
           'span',
-          { ref: 'root', style: { cursor: 'pointer' }, className: classes },
-          starRating
+          { ref: function (ref) {
+              return _this2.root = ref;
+            }, style: { cursor: 'pointer' }, className: classes },
+          this.state.editing ? this.renderEditing() : this.renderShow()
         )
       );
     }

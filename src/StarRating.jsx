@@ -50,8 +50,8 @@ class StarRating extends React.Component {
   componentWillMount() {
     this.min = 0;
     this.max = this.props.ratingAmount || 5;
-    if (this.props.rating) {
 
+    if (this.props.rating) {
       this.state.editing = this.props.editing || false;
       var ratingVal = this.props.rating;
       this.state.ratingCache.pos = this.getStarRatingPosition(ratingVal);
@@ -174,7 +174,6 @@ class StarRating extends React.Component {
   }
 
   handleClick(e) {
-
     // is it disabled?
     if (this.props.disabled) {
       e.stopPropagation();
@@ -202,9 +201,46 @@ class StarRating extends React.Component {
     }
   }
 
-  render() {
+  renderInput() {
+    return (
+      <input
+        readOnly
+        type="number"
+        name={this.props.name}
+        value={this.state.ratingCache.rating}
+        style={{ display: 'none' }}
+        min={this.min}
+        max={this.max}
+      />
+    );
+  }
 
-    var caption = null;
+  renderEditing() {
+    return (
+      <div
+        ref={ref => this.ratingContainer = ref}
+        className="rating-container rating-gly-star"
+        data-content={this.state.glyph}
+        onMouseMove={this.handleMouseMove.bind(this)}
+        onMouseLeave={this.handleMouseLeave.bind(this)}
+        onClick={this.handleClick.bind(this)}
+      >
+        <div className="rating-stars" data-content={this.state.glyph} style={{width: this.state.pos}}></div>
+        {this.renderInput()}
+      </div>
+    );
+  }
+
+  renderShow() {
+    return (
+      <div ref="ratingContainer" className="rating-container rating-gly-star" data-content={this.state.glyph}>
+        <div className="rating-stars" data-content={this.state.glyph} style={{width: this.state.pos}}></div>
+        {this.renderInput()}
+      </div>
+    );
+  }
+
+  render() {
     var classes = cx({
       'react-star-rating__root': true,
       'rating-disabled': this.props.disabled,
@@ -212,39 +248,13 @@ class StarRating extends React.Component {
       'rating-editing': this.state.editing
     });
 
-    // is there a caption?
-    if (this.props.caption) {
-      caption = (<span className="react-rating-caption">{this.props.caption}</span>);
-    }
-
-    // are we editing this rating?
-    var starRating;
-    if (this.state.editing) {
-      starRating = (
-        <div ref="ratingContainer"
-          className="rating-container rating-gly-star"
-          data-content={this.state.glyph}
-          onMouseMove={this.handleMouseMove.bind(this)}
-          onMouseLeave={this.handleMouseLeave.bind(this)}
-          onClick={this.handleClick.bind(this)}>
-          <div className="rating-stars" data-content={this.state.glyph} style={{width: this.state.pos}}></div>
-          <input type="number" name={this.props.name} value={this.state.ratingCache.rating} style={{display: 'none !important'}} min={this.min} max={this.max} readOnly />
-        </div>
-      );
-    } else {
-      starRating = (
-        <div ref="ratingContainer" className="rating-container rating-gly-star" data-content={this.state.glyph}>
-          <div className="rating-stars" data-content={this.state.glyph} style={{width: this.state.pos}}></div>
-          <input type="number" name={this.props.name} value={this.state.ratingCache.rating} style={{display: 'none !important'}} min={this.min} max={this.max} readOnly />
-        </div>
-      );
-    }
-
     return (
       <span className="react-star-rating">
-        {caption}
-        <span ref="root" style={{cursor: 'pointer'}} className={classes}>
-          {starRating}
+        {this.props.caption && !!this.props.caption.length &&
+          <span className="react-rating-caption">{this.props.caption}</span>}
+
+        <span ref={ref => this.root = ref} style={{ cursor: 'pointer' }} className={classes}>
+          {this.state.editing ? this.renderEditing() : this.renderShow()}
         </span>
       </span>
     );
